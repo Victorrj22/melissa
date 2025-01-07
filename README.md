@@ -16,3 +16,9 @@ O que foi necessário instalar?
 APIs
 -
 - Feriados: https://api.invertexto.com/api-feriados (3k req/mês)
+
+Referências
+-
+- https://www.treinaweb.com.br/blog/consumindo-apis-com-python-parte-1
+- https://github.com/msamylea/Llama3_Function_Calling/blob/main/app.py
+
