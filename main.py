@@ -1,7 +1,8 @@
 ﻿from langchain_ollama import ChatOllama
 import Holidays as holidays
+import Generic as generic
 
-question = "Me fala quais foram os feriados do ano passado no RJ";
+question = "Qual o seu nome?";
 
 model=ChatOllama(model="llama3.2", format="json")
 
@@ -26,11 +27,27 @@ model = model.bind_tools(
                 "required": ["state","year"]
             }
         },
+        {
+
+            "name": "generic_response",
+            "description": "Get a generic response for generic questions",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "description": "A generic question about anything"
+                    }
+                },
+                "required": ["question"]
+            }
+        }
     ],
 )
 
 functions = {
-    "get_holidays": holidays.get_holidays
+    "get_holidays": holidays.get_holidays,
+    "generic_response": generic.generic_response
 }
 
 def invoke_and_run(model, invoke_arg):
@@ -57,6 +74,13 @@ def invoke_and_run(model, invoke_arg):
                                 print(holiday)
                         else:
                             print(f"Argumentos incompletos: {arguments}")
+                    #Caso o modelo identifique que é uma pergunta genérica, entra no fluxo do modelo Ollama
+                    elif function and function_name == 'generic_response':
+                        response = generic.generic_response(question=question)
+                        message = response.get('message')
+                        content = message.get('content')
+                        print('Pergunta:' + question)
+                        print ('Resposta:' + content)
                 else:
                     print(f"Função ou argumentos ausentes em: {tool_call}")
 
