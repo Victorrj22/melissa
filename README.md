@@ -4,7 +4,7 @@
 Monte uma imagem Docker do Ollama:
 - docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 
-No terminal do Doccker, com o Ollama rodando, rode o seguinte comando:
+No terminal do Docker, com o Ollama rodando, rode o seguinte comando:
 - ollama pull llama3.2
 
 O que foi necessário instalar?

@@ -2,7 +2,8 @@
 import Holidays as holidays
 import Generic as generic
 
-question = "Qual o seu nome?";
+# question = "Estamos no mês de Janeiro de 2025, quais são os feriados desse nês em SP?";
+question = "[data atual: 10/01/2025] Quais feriados nesse mes em Sao Paulo?"
 
 model=ChatOllama(model="llama3.2", format="json")
 
@@ -69,9 +70,9 @@ def invoke_and_run(model, invoke_arg):
                         if state and year:
                             #Chama a função passando os parâmetros reconhecidos
                             holidays_list = function(state=state, year=year, token=holidays.token)
-                            print("Question: " + question)
-                            for holiday in holidays_list:
-                                print(holiday)
+                            reinput = "Dada essa pergunta: '" + question + "', os feriados são: " + str(holidays_list) + ". Responda a pergunta de forma direta."
+                            reponse = generic.generic_response(reinput)
+                            print(reponse)
                         else:
                             print(f"Argumentos incompletos: {arguments}")
                     #Caso o modelo identifique que é uma pergunta genérica, entra no fluxo do modelo Ollama
