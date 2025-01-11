@@ -1,6 +1,7 @@
 ﻿import ollama
+from ollama import ChatResponse
 
-def generic_response(question: str) -> str:
+def generic_response(question: str) -> ChatResponse:
     response = ollama.chat(
         model="llama3.2",
         messages=[

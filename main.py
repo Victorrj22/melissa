@@ -1,10 +1,10 @@
 ﻿from langchain_ollama import ChatOllama
 import Holidays as holidays
 import Generic as generic
+from ollama import ChatResponse
 
 # question = "Estamos no mês de Janeiro de 2025, quais são os feriados desse nês em SP?";
 question = "[data atual: 10/01/2025] Quais feriados nesse mes em Sao Paulo?"
-
 model=ChatOllama(model="llama3.2", format="json")
 
 #Aqui é feito o 'treinamento' da IA de acordo com cada função
@@ -70,9 +70,9 @@ def invoke_and_run(model, invoke_arg):
                         if state and year:
                             #Chama a função passando os parâmetros reconhecidos
                             holidays_list = function(state=state, year=year, token=holidays.token)
-                            reinput = "Dada essa pergunta: '" + question + "', os feriados são: " + str(holidays_list) + ". Responda a pergunta de forma direta."
-                            reponse = generic.generic_response(reinput)
-                            print(reponse)
+                            re_input = "Dada essa pergunta: '" + question + "', os feriados são: " + str(holidays_list) + ". Responda a pergunta de forma resumida e direta e como se estivesse conversando oralmente."
+                            response: ChatResponse = generic.generic_response(re_input)
+                            print(response.message.content)
                         else:
                             print(f"Argumentos incompletos: {arguments}")
                     #Caso o modelo identifique que é uma pergunta genérica, entra no fluxo do modelo Ollama
