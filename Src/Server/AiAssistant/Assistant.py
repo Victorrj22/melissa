@@ -49,7 +49,7 @@ class Assistant:
 
 
     def __config_model(self) -> ChatOllama:
-        model: ChatOllama = ChatOllama(model="llama3.2", format="json")
+        model: ChatOllama = ChatOllama(model="llama3.1", format="json")
         tools = self.__get_tools()
         model = model.bind_tools(tools)  # type: ignore
         return model
@@ -80,7 +80,6 @@ class Assistant:
                     raise ValueError("Argumentos ou nome da função não encontrados")
 
                 function = (functions.get(function_name))
-                chat_response: ChatResponse
 
                 # Feriados
                 if function_name == "get_holidays":
@@ -105,9 +104,6 @@ class Assistant:
                             return chat_response.message.content
                         else:
                             return generic_error_message
-
-                    else:
-                        print(f"Argumentos incompletos: {function_parameters}")
 
 
             # Resposta genérica
