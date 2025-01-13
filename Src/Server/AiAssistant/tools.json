@@ -13,27 +13,15 @@
           "year": {
             "type": "integer",
             "description": "O ano para obter os feriados"
+          },
+          "month": {
+            "type": "integer",
+            "description": "O mês para obter os feriados"
           }
         },
         "required": [
           "state",
           "year"
-        ]
-      }
-    },
-    {
-      "name": "generic_response",
-      "description": "Obter uma resposta genérica para perguntas genéricas",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "question": {
-            "type": "string",
-            "description": "Uma pergunta genérica sobre qualquer assunto"
-          }
-        },
-        "required": [
-          "question"
         ]
       }
     }

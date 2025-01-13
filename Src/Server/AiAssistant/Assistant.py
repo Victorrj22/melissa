@@ -16,7 +16,7 @@ class Assistant:
 
 
     def get_ai_output(self, prompt: str) -> str:
-        time_context = f"[Data e hora atual: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "] "
+        time_context = f"[Metadata: Data e hora atual: " + datetime.now().strftime("%d/%B/%Y %H:%M:%S") + "]\n---\n"
         return self.__run_llm(self.__model, time_context + prompt)
 
 
@@ -41,7 +41,6 @@ class Assistant:
                 {
                     "role": "user",
                     "content": question,
-                    "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
                 },
             ],
         )
@@ -57,9 +56,8 @@ class Assistant:
 
 
     def __run_llm(self, llm_model, prompt_input) -> str:
-        functions: dict[str, Callable[[str, int], list[Holiday]] | Callable[[str], ChatResponse]] = {
-            "get_holidays": self.__holiday_service.get_holidays,
-            "generic_response": self.__get_response_from_model
+        functions: dict[str, Callable[[str, int, int], list[Holiday]]] = {
+            "get_holidays": self.__holiday_service.get_holidays
         }
 
         try:
@@ -88,9 +86,11 @@ class Assistant:
                 if function_name == "get_holidays":
                     state: str | None = function_parameters.get('state')
                     year_as_str: str | None = function_parameters.get('year')
+                    month_as_str: str | None = function_parameters.get('month')
                     year: int | None = int(year_as_str) if year_as_str else None
-                    if state and year:
-                        holidays_list: list[Holiday] = function(state=state, year=year)  # type: ignore
+                    month: int | None = int(month_as_str) if month_as_str else None
+                    if state and year and month:
+                        holidays_list: list[Holiday] = function(state, year, month)  # type: ignore
 
                         if holidays_list.__len__() == 0:
                             return "Nenhum feriado foi encontrado"
@@ -110,16 +110,12 @@ class Assistant:
                         print(f"Argumentos incompletos: {function_parameters}")
 
 
-                # Resposta genérica
-                elif function_name == "generic_response":
-                    chat_response = function(question=prompt_input)  # type: ignore
-                    if isinstance(chat_response.message.content, str):
-                        return chat_response.message.content
-                    else:
-                        return generic_error_message
-
-
-            raise Exception("Nenhuma função foi chamada")
+            # Resposta genérica
+            chat_response = self.__get_response_from_model(prompt_input)
+            if isinstance(chat_response.message.content, str):
+                return chat_response.message.content
+            else:
+                return generic_error_message
 
         except Exception as e:
             print(f"Erro ao tentar responder: {e}")
