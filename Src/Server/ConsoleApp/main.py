@@ -1,6 +1,6 @@
 from Src.Server.AiAssistant.Assistant import Assistant
 
-assistant = Assistant(use_online_sources= True)
+assistant = Assistant(model_name="llama3.1", use_online_sources=True)
 
 print("Faça uma pergunta à Melissa:")
 

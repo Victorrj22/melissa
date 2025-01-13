@@ -9,15 +9,16 @@ from Src.Server.AiAssistant.Functions.Holidays.Holiday import Holiday
 from Src.Server.AiAssistant.Functions.Holidays.HolidayService import HolidayService
 
 class Assistant:
-    def __init__(self, use_online_sources: bool = False):
-        self.__use_online_sources = use_online_sources
+    def __init__(self, model_name: str = "llama3.2", use_online_sources: bool = False):
+        self.use_online_sources = use_online_sources
+        self.model_name = model_name
         self.__holiday_service = HolidayService(from_online_source=use_online_sources)
-        self.__model = self.__config_model()
+        self.__initialized_model = self.__config_model()
 
 
     def get_ai_output(self, prompt: str) -> str:
         time_context = f"[Metadata: Data e hora atual: " + datetime.now().strftime("%d/%B/%Y %H:%M:%S") + "]\n---\n"
-        return self.__run_llm(self.__model, time_context + prompt)
+        return self.__run_llm(time_context + prompt)
 
 
 
@@ -33,14 +34,14 @@ class Assistant:
         return tools
 
 
-    @staticmethod
-    def __get_response_from_model(question: str) -> ChatResponse:
+
+    def __get_response_from_model(self, prompt_input: str) -> ChatResponse:
         response = ollama.chat(
-            model="llama3.2",
+            model=self.model_name,
             messages=[
                 {
                     "role": "user",
-                    "content": question,
+                    "content": prompt_input,
                 },
             ],
         )
@@ -49,24 +50,24 @@ class Assistant:
 
 
     def __config_model(self) -> ChatOllama:
-        model: ChatOllama = ChatOllama(model="llama3.1", format="json")
+        model: ChatOllama = ChatOllama(model=self.model_name, format="json")
         tools = self.__get_tools()
         model = model.bind_tools(tools)  # type: ignore
         return model
 
 
-    def __run_llm(self, llm_model, prompt_input) -> str:
+    def __run_llm(self, prompt_input) -> str:
         functions: dict[str, Callable[[str, int, int], list[Holiday]]] = {
             "get_holidays": self.__holiday_service.get_holidays
         }
 
         try:
             generic_error_message = "Não foi possível encontrar uma resposta para a pergunta"
-            result = llm_model.invoke(prompt_input)
+            result = self.__initialized_model.invoke(prompt_input)
             if not result:
                 raise ValueError("Resultado não encontrado")
 
-            tool_calls = result.tool_calls
+            tool_calls = result.tool_calls  # type: ignore
             if not tool_calls:
                 raise ValueError("Chamadas de função não encontradas")
 
