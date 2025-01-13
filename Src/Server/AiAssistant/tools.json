@@ -1,0 +1,41 @@
+{
+  "tools": [
+    {
+      "name": "get_holidays",
+      "description": "Obter os feriados do ano para um estado específico",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "description": "A sigla do estado brasileiro para obter os feriados (AC - Acre, AP - Amapá, AM - Amazonas, RR - Roraima, BA - Bahia, SP - São Paulo, RJ - Rio de Janeiro, PE - Pernambuco, AL - Alagoas, SE - Sergipe, MA - Maranhão, PB - Paraíba, PR - Paraná, SC - Santa Catarina, RS - Rio Grande do Sul, MS - Mato Grosso do Sul, DG - Distrito Federal, MT - Mato Grosso, GO - Goiás, MG - Minas Gerais, EH - Espírito Santo, RR - Roraima, PN - Piauí, TO - Tocantins)."
+          },
+          "year": {
+            "type": "integer",
+            "description": "O ano para obter os feriados"
+          }
+        },
+        "required": [
+          "state",
+          "year"
+        ]
+      }
+    },
+    {
+      "name": "generic_response",
+      "description": "Obter uma resposta genérica para perguntas genéricas",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "Uma pergunta genérica sobre qualquer assunto"
+          }
+        },
+        "required": [
+          "question"
+        ]
+      }
+    }
+  ]
+}
