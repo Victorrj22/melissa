@@ -5,8 +5,8 @@ from typing import Callable
 from datetime import datetime
 from langchain_ollama import ChatOllama
 from ollama import ChatResponse
-from Src.Server.AiAssistant.Functions.Holidays.Holiday import Holiday
-from Src.Server.AiAssistant.Functions.Holidays.HolidayService import HolidayService
+from ..AiAssistant.Functions.Holidays import Holiday  # type: ignore
+from ..AiAssistant.Functions.Holidays.HolidayService import HolidayService  # type: ignore
 
 class Assistant:
     def __init__(self, model_name: str = "llama3.2", use_online_sources: bool = False):

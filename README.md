@@ -1,21 +1,39 @@
-﻿ANTES DE QUALQUER COISA:
+﻿# Melissa - Assistente Virtual empoderada por IA
 -
 
-Monte uma imagem Docker do Ollama:
-- docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+## Para rodar o projeto
+### Requisitos
+- Necessário ter o Python 3.8 ou superior instalado.
+- Necessário ter o pip instalado.
+- Necessário ter o Ollama rodando.
+- Necessário ter uma api_key do [Invertexto](https://api.invertexto.com/).
 
-No terminal do Docker, com o Ollama rodando, rode o seguinte comando:
-- ollama pull llama3.2
+### Instalação rápida do Ollama (Docker)
 
-O que foi necessário instalar?
--
+```bash
+sudo docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+ollama pull llama3.2
+```
 
-- pip install ollama
-- pip install langchain_ollama
+Para mais opções de instalação, acesse: https://ollama.com/
 
-APIs
--
-- Feriados: https://api.invertexto.com/api-feriados (3k req/mês)
+### Instalação das dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+### Criando arquivo .env
+```bash
+cp Src/Server/.env.example Src/Server/.env
+```
+
+Informe a api_key do Invertexto no arquivo .env
+
+### Rodando o projeto no console
+```bash
+python python -m Src.Server.ConsoleApp.main
+```
 
 Referências
 -
