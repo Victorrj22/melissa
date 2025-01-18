@@ -1,5 +1,4 @@
 ﻿# Melissa - Assistente Virtual empoderada por IA
--
 
 ## Para rodar o projeto
 ### Requisitos
@@ -35,8 +34,7 @@ Informe a api_key do Invertexto no arquivo .env
 python python -m Src.Server.ConsoleApp.main
 ```
 
-Referências
--
+## Referências
 - https://www.treinaweb.com.br/blog/consumindo-apis-com-python-parte-1
 - https://github.com/msamylea/Llama3_Function_Calling/blob/main/app.py
 - https://sacha-schwab.medium.com/3-ways-to-run-llama-3-2-locally-79bfaf161669
