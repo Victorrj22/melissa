@@ -11,7 +11,7 @@
 
 ```bash
 sudo docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-ollama pull llama3.2
+ollama pull llama3.1
 ```
 
 Para mais opções de instalação, acesse: https://ollama.com/
@@ -33,6 +33,8 @@ Informe a api_key do Invertexto no arquivo .env
 ```bash
 python python -m Src.Server.ConsoleApp.main
 ```
+
+![ConsoleApp](./Assets/console_exemple.png)
 
 ## Referências
 - https://www.treinaweb.com.br/blog/consumindo-apis-com-python-parte-1
