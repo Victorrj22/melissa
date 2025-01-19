@@ -22,14 +22,14 @@ Para mais opções de instalação, acesse: https://ollama.com/
 pip install -r requirements.txt
 ```
 
-### Criando arquivo .env
+### Criação do arquivo .env
 ```bash
 cp Src/Server/.env.example Src/Server/.env
 ```
 
 Informe a api_key do Invertexto no arquivo .env
 
-### Rodando o projeto no console
+### Execução do projeto no console
 ```bash
 python python -m Src.Server.ConsoleApp.main
 ```
