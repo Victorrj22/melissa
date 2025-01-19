@@ -2,7 +2,7 @@
 
 ## Para rodar o projeto
 ### Requisitos
-- Necessário ter o Python 3.8 ou superior instalado.
+- Necessário ter o Python 3.10 ou superior instalado.
 - Necessário ter o pip instalado.
 - Necessário ter o Ollama rodando.
 - Necessário ter uma api_key do [Invertexto](https://api.invertexto.com/).
